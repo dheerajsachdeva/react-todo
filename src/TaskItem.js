@@ -1,37 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-export const TaskItem = ( {task, deleteTask} ) => {
+const TaskItem = ({ task, deleteTask }) => {
+  const [checked, setChecked] = useState(task.checked);
 
-    const [checked, setChecked] = useState(task.checked)
-
-    const handleCheckboxChange = (e) =>{
-        setChecked(!checked)
-    }
+  const handleCheckboxChange = () => {
+    setChecked(!checked);
+  };
 
   return (
     <li>
-        <div className = "taskItem">
-        <input 
-        type = "checkbox"
-        checked = {checked}
-        onChange = {handleCheckboxChange}
-        name = {task.name}
-        id = {task.id}
+      <div className="taskItem">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={handleCheckboxChange}
+          name={task.name}
+          id={task.id}
         />
-        <label htmlFor= {task.id}>
-            {task.name}
+        <label htmlFor={task.id}>
+          {task.name}
         </label>
-        <button className='btn btn-edit'
-        // onClick = {}
-        >
-        Edit
+        <button type="button" className="btn btn-edit">
+          Edit
         </button>
-        <button className='btn btn-delete' 
-        onClick = {() => deleteTask(task.id) } 
+        <button
+          type="button"
+          className="btn btn-delete"
+          onClick={() => deleteTask(task.id)}
         >
-        Delete
+          Delete
         </button>
-        </div>
-        </li>
-  )
-}
+      </div>
+    </li>
+  );
+};
+
+TaskItem.propTypes = {
+  deleteTask: PropTypes.func.isRequired,
+  task: PropTypes.objectOf(PropTypes.string).isRequired,
+};
+
+export default TaskItem;
